@@ -1,0 +1,28 @@
+#include <Servo.h>
+
+Servo tap_servo;
+
+const int sensor_pin = 4;
+const int tap_servo_pin = 5;
+int val;
+
+void setup() {
+  pinMode(sensor_pin, INPUT);
+  tap_servo.attach(tap_servo_pin);
+  tap_servo.write(0);  // Start at rest
+}
+
+void loop() {
+  val = digitalRead(sensor_pin);
+
+  if (val == 1) { // Rain detected
+    // Simulate back and forth wiping motion
+    tap_servo.write(0);
+    delay(500);
+    tap_servo.write(180);
+    delay(500);
+  } else {
+    // No rain - stay at rest
+    tap_servo.write(0);
+  }
+}
